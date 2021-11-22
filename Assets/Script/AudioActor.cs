@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AudioActor : MonoBehaviour
 {
+
+    int todayupdate = 256;
     // Start is called before the first frame update
     void Start()
     {
