@@ -4,16 +4,28 @@ using UnityEngine;
 
 public class SwipManager : MonoBehaviour
 {
-    AudioSource AudioChannel;
-    //inside class
     Vector2 firstPressPos;
     Vector2 secondPressPos;
     Vector2 currentSwipe;
 
+    //Declare a Delegate
+    public delegate void OnswipRight();
+    public static event OnswipRight onSwipRight;
+
     private void Start()
     {
-        AudioChannel = GetComponent<AudioSource>();
-        AudioChannel.panStereo = 1.0f;
+        onSwipRight += SwipRight;
+        onSwipRight += Swiped;
+    }
+
+    public void SwipRight()
+    {
+        Debug.Log("Event SwipRight");
+    }
+
+    public void Swiped()
+    {
+        Debug.Log("Working");
     }
 
     private void Update()
@@ -41,26 +53,28 @@ public class SwipManager : MonoBehaviour
 
             //swipe upwards
             if (currentSwipe.y > 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f)
-        {
-                AudioChannel.panStereo = 0.0f;
+            {
+
             }
+       
             //swipe down
             if (currentSwipe.y < 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f)
-        {
-                AudioChannel.panStereo = 0.0f;
+            {
+                Debug.Log("SwipDown");
             }
+        
             //swipe left
             if (currentSwipe.x < 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f)
-        {
-                AudioChannel.panStereo = -1.0f;
+            {
+
             }
+        
             //swipe right
             if (currentSwipe.x > 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f)
-        {
-                AudioChannel.panStereo = 1.0f;
+            {
+                onSwipRight();
             }
+        
         }
     }
-
-
 }
